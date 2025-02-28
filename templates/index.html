@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Поиск фильмов</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        h1 {
+            color: #333;
+        }
+        form {
+            margin-bottom: 20px;
+        }
+        label {
+            font-weight: bold;
+        }
+        input[type="text"], select {
+            padding: 5px;
+            margin-right: 10px;
+        }
+        button {
+            padding: 5px 10px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        img {
+            max-width: 100px;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>Поиск фильмов</h1>
+    <form method="POST">
+        <label for="search_type">Тип поиска:</label>
+        <select name="search_type" id="search_type">
+            <option value="по тегу">По тегу</option>
+            <option value="по названию">По названию</option>
+            <option value="по описанию">По описанию</option>
+        </select>
+        <label for="search_text">Текст для поиска:</label>
+        <input type="text" name="search_text" id="search_text" required>
+        <button type="submit">Искать</button>
+    </form>
+
+    {% if films %}
+        <h2>Результаты поиска:</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Постер</th>
+                    <th>Название</th>
+                    <th>Рейтинг</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for film in films %}
+                    <tr>
+                        <td>
+                            {% if film['poster_path'] %}
+                                <img src="{{ film['poster_path'] }}" alt="{{ film['name'] }}">
+                            {% else %}
+                                <p>Постер отсутствует</p>
+                            {% endif %}
+                        </td>
+                        <td>{{ film['name'] }}</td>
+                        <td>{{ film['rating'] }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>Введите запрос для поиска.</p>
+    {% endif %}
+</body>
+</html>
