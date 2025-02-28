@@ -194,10 +194,10 @@ def requests_to_page(page_ranges):
 
                     if url:
                         try:
-                            if not os.path.exists("Posters"):
-                                os.makedirs("Posters")
+                            if not os.path.exists("static/Posters"):
+                                os.makedirs("static/Posters")
                             safe_name = re.sub(r'[\\/*?:"<>|]', "_", name)
-                            poster_path = os.path.join("Posters", f"{safe_name}.jpg")
+                            poster_path = os.path.join("static/Posters", f"{safe_name}.jpg")
                             wget.download(url, out=poster_path)
                         except Exception as e:
                             logging.error(f"Ошибка при скачивании постера для фильма '{name}': {e}")
@@ -216,7 +216,7 @@ def requests_to_page(page_ranges):
             logging.error(f"Ошибка при обработке страницы {page}: {e}")
             continue
 
-        
+
         time.sleep(1)
 
 if __name__ == "__main__":
